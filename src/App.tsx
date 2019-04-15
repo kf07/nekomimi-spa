@@ -1,13 +1,16 @@
 import React from 'react';
 import { BrowserRouter,Route,Switch } from "react-router-dom";
 import './App.css';
+import RootPage from "./pages/Root";
+import WatchPage from "./pages/Watch";
+import NoMatchPage from "./pages/NoMatch";
 
 const App = () => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/" component={() => <h1>Root Page</h1>} />
-      <Route path="/watch/:id" component={() => <h1>Watch Page</h1>} />
-      <Route component={() => <h1>404</h1>} />
+      <Route exact path="/" component={RootPage} />
+      <Route path="/watch/:id" component={WatchPage} />
+      <Route component={NoMatchPage} />
     </Switch>
   </BrowserRouter>
 );
