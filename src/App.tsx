@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter,Route,Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
-import RootPage from "./pages/Root";
-import WatchPage from "./pages/Watch";
-import NoMatchPage from "./pages/NoMatch";
+import RootPage from './pages/Root';
+import WatchPage from './pages/Watch';
+import NoMatchPage from './pages/NoMatch';
 
 const App = () => (
   <BrowserRouter>
