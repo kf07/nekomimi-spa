@@ -25,7 +25,7 @@ export default class ApiClient {
   }
   static async videos(id: string,options = {}) {
     const { data } = await axios.get<gapi.client.youtube.VideoListResponse>(
-      `${this/this.endpointUrl}/videos`,
+      `${this.endpointUrl}/videos`,
       {
         params: {
           ...options,
