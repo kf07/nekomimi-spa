@@ -1,11 +1,13 @@
 import debounce from 'lodash.debounce';
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useContext} from 'react';
 import styles from './Root.module.css';
 import SearchBar from "../organisms/SearchBar";
 import SearchList from "../organisms/SearchList";
 import ApiClient from '../utils/ApiClient';
+import {AppContext} from '../App';
 
 const RootTemplate = () => {
+  const {searchResult, setSearchResult} = useContext(AppContext);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
@@ -14,14 +16,13 @@ const RootTemplate = () => {
     debounce(async (q: string) => {
       try {
         setIsError(false);
-        setIsLoading(true);
-        if (q.trim() !== '') {
-          const {items} = await ApiClient.search(q);
-          setQuery(q);
-          setList(items!)
-        } else {
-          setList([]);
+        if (q.trim() === '') {
+          setSearchResult({query: '', items: []});
+          return;
         }
+        setIsLoading(true)
+        const {items} = await ApiClient.search(q);
+        setSearchResult({query: q, items: items!});
       } catch (e) {
         setIsError(true)
       } finally {
@@ -32,13 +33,13 @@ const RootTemplate = () => {
   );
   return (
     <>
-      <SearchBar onChange={searchList}/>
+      <SearchBar defaultValue={searchResult.query} onChange={searchList}/>
       <div className={styles.content}>
         <SearchList
           isLoading={isLoading}
           isError={isError}
-          query={query}
-          list={list}
+          query={searchResult.query}
+          list={searchResult.items}
         />
       </div>
     </>

@@ -17,26 +17,26 @@ const SearchList = (props:Props) => {
   const createHandleClick = useCallback((videoId: string) => {
     return ()=> history.push(`/watch/${videoId}`);
   },[]);
-  if(list.length === 0) {
-    return (
-      <div className={styles.content}>
-        <ErrorIcon fontSize="large" />
-        <Typography variant="body1">動画が見つかりませんでした。</Typography>
-      </div>
-    )
-  }
-  if(isError) {
+  if (isError) {
     return (
       <div className={styles.content}>
         <ErrorIcon fontSize="large" />
         <Typography variant="body1">動画リストの取得に失敗しました</Typography>
       </div>
-    )
+    );
   }
-  if(isLoading) {
+  if (isLoading) {
     return (
       <div className={styles.content}>
         <ReactLoading type="bubbles" color="#999" />
+      </div>
+    );
+  }
+  if (list.length === 0) {
+    return (
+      <div className={styles.content}>
+        <ErrorIcon fontSize="large" />
+        <Typography variant="body1">動画が見つかりませんでした</Typography>
       </div>
     );
   }
@@ -55,8 +55,8 @@ const SearchList = (props:Props) => {
           divider
         >
           <img
-            className={styles.thumbnail}
-            src={snippet!.thumbnails!.default!.url}
+            className={`lazyload ${styles.thumbnail}`}
+            data-src={snippet!.thumbnails!.default!.url!}
             alt={snippet!.title}
           />
           <ListItemText primary={snippet!.title} />
